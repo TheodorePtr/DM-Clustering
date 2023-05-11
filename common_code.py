@@ -2,7 +2,6 @@ from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import pandas as pd
 
-
 def test_hopkins(X: pd.DataFrame, sample_size: int = None) -> float:
     """
     Calculates the Hopkins statistic for the input DataFrame:
@@ -41,7 +40,7 @@ def test_hopkins(X: pd.DataFrame, sample_size: int = None) -> float:
         w_dist, _ = nbrs.kneighbors(X.values[j].reshape(1, -1), 2, return_distance=True)
         wjd.append(w_dist[0][1])
 
-    h = sum(ujd) / (sum(ujd) + sum(wjd))
+    h = 1 if (sum(ujd) + sum(wjd)) == 0 else sum(ujd) / (sum(ujd) + sum(wjd))
     if np.isnan(h):
         print(ujd, wjd)
         h = 0
